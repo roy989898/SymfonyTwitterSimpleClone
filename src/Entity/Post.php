@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
@@ -18,6 +19,12 @@ class Post
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
     private ?User $user = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $create_date_time = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $edit_date_time = null;
 
     public function getId(): ?int
     {
@@ -44,6 +51,30 @@ class Post
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCreateDateTime(): ?\DateTimeInterface
+    {
+        return $this->create_date_time;
+    }
+
+    public function setCreateDateTime(\DateTimeInterface $create_date_time): self
+    {
+        $this->create_date_time = $create_date_time;
+
+        return $this;
+    }
+
+    public function getEditDateTime(): ?\DateTimeInterface
+    {
+        return $this->edit_date_time;
+    }
+
+    public function setEditDateTime(\DateTimeInterface $edit_date_time): self
+    {
+        $this->edit_date_time = $edit_date_time;
 
         return $this;
     }
