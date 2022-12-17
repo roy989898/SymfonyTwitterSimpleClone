@@ -77,4 +77,22 @@ class PostController extends AbstractController
     }
 
 
+    #[isGranted('ROLE_USER')]
+    #[Route('/post/del/{post<\d+>}', name: 'app_post_delete')]
+    public function deletePost(Post $post, Request $request)
+    {
+        $postUserID = $post->getUser()?->getId();
+        $userID = $this->getUser()?->getId();
+        if ($postUserID !== $userID) {
+            $this->redirectToRoute('app_post');
+        }
+
+        $this->postRepository->remove($post, true);
+
+        return $this->redirectToRoute('app_post');
+
+
+    }
+
+
 }
