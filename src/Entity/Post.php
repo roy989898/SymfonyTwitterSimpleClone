@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\PostRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -14,6 +16,8 @@ class Post
     #[ORM\Column]
     private ?int $id = null;
 
+
+    #[Length(min: 1, max: 255)]
     #[ORM\Column(length: 10000)]
     private ?string $text = null;
 
