@@ -55,6 +55,15 @@
                             {{ comment.created|date }}
                         {% endif %}
 
+                        {#                        TODO edit #}
+                        {% if app.user.id ==  comment.user.id %}
+                            <a class="border border-amber-600 p-3"
+                               href="{{ path('app_comment_edit',{'comment':comment.id}) }}"
+
+
+                            >Edit</a>
+                        {% endif %}
+
                     </div>
                 </div>
 

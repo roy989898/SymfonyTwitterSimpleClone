@@ -3,18 +3,24 @@
 {% block title %}Hello CommentController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    {#    TODO the comment form #}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {{ form_start(commentForm,{
+        'attr':{
+            'novalidate':'novalidate'
+        }
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/leungpoming/Documents/Program/Symfony/my_simplify_twitter/src/Controller/CommentController.php'|file_link(0) }}">src/Controller/CommentController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/leungpoming/Documents/Program/Symfony/my_simplify_twitter/templates/comment/edit.html.twig'|file_link(0) }}">templates/comment/index.html.twig</a></code></li>
-    </ul>
-</div>
+    }) }}
+
+    {{ form_widget(commentForm.text,{
+        'attr':{
+            'class':'form_widget'
+        }
+
+    }) }}
+    {{ form_errors(commentForm.text) }}
+    <button type="submit" class="btn">Update</button>
+
+    {{ form_end(commentForm) }}
+
 {% endblock %}
