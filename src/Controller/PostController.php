@@ -27,6 +27,15 @@ class PostController extends AbstractController
         ]);
     }
 
+    #[Route('/post/{post<\d+>}', name: 'app_post_detail')]
+    public function postDetail(Post $post)
+    {
+        return $this->render('post/detail.html.twig', [
+            'post' => $post
+        ]);
+
+    }
+
     #[isGranted('ROLE_USER')]
     #[Route('/post/add', name: 'app_post_add')]
     public function addPost(Request $request)
