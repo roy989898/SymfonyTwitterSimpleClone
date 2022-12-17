@@ -24,16 +24,18 @@ class PostRepository extends ServiceEntityRepository
     public function save(Post $entity, bool $flush = false): void
     {
 
-        $isAlreadyInDb = $entity->getId() === null;
-        if ($isAlreadyInDb) {
-            //             set the update date time
-            $entity->setEditDateTime(new \DateTime());
+        $isNotAlreadyInDb = $entity->getId() === null;
+        if ($isNotAlreadyInDb) {
 
-        } else {
-//             set the create date time
+
+            //             set the create date time
             if ($entity->getCreateDateTime() === null) {
                 $entity->setCreateDateTime(new \DateTime());
             }
+
+        } else {
+            //             set the update date time
+            $entity->setEditDateTime(new \DateTime());
         }
 
         $this->getEntityManager()->persist($entity);

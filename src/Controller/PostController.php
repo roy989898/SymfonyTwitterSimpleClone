@@ -41,7 +41,7 @@ class PostController extends AbstractController
         }
 
 //        TODO add the the form
-        return $this->render('post/create.html.twig');
+        return $this->render('post/create.html.twig', ['form' => $form]);
 
     }
 }
