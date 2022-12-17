@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PostController!{% endblock %}
+
+{% block body %}
+
+    Create
+    {{ form_start(form,{
+
+        'attr':{
+            'novalidate':'novalidate'
+        }
+
+
+    }) }}
+
+    <div class="flex flex-col">
+
+        {{ form_label(form.text,'Please enter the post text',
+            {'label_attr':{
+                'class':'for_label'
+            }}
+        ) }}
+        {{ form_widget(form.text,{
+            'attr':{
+                'class':'form_widget'
+            }
+
+        }) }}
+        {{ form_errors(form.text) }}
+
+        <button type="submit" class="btn">Save</button>
+
+    </div>
+
+
+
+    {{ form_end(form) }}
+{% endblock %}
