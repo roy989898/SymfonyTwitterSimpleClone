@@ -31,6 +31,13 @@ security:
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
+    role_hierarchy:
+#      not verified user not allow to create post and leave a comment,verified can
+#      superadmin can delete all the post and comment
+#        can see,can comment,can create post,can delete other people post
+        ROLE_SUPER_ADMIN: [ROLE_COMMENTER]
+        ROLE_COMMENTER: [ROLE_USER]
+
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
