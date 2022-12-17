@@ -15,4 +15,13 @@ class TestingController extends AbstractController
             'controller_name' => 'TestingController',
         ]);
     }
+
+
+    #[Route('/testingProtected', name: 'app_testing')]
+    public function testingProtected(): Response
+    {
+        return $this->render('testing/protected.html.twig', [
+
+        ]);
+    }
 }
