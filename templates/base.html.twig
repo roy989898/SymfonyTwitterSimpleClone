@@ -16,18 +16,28 @@
 </head>
 <body>
 <div class="flex flex-row gap-1">
-    <a href="{{ path('app_login') }}">
-        Login
-    </a>
-    <a href="#">
-        Logout
-    </a>
+
+
+    {% if not is_granted('ROLE_USER') %}
+        <a href="{{ path('app_login') }}">
+            Login
+        </a>
+    {% endif %}
+
+    {% if is_granted('ROLE_USER') %}
+        <a href="#">
+            Logout
+        </a>
+    {% endif %}
     <a href="{{ path('app_post') }}">
         Posts
     </a>
-    <a href="{{ path('app_post_add') }}">
-        Create Posts
-    </a>
+
+    {% if is_granted('ROLE_USER') %}
+        <a href="{{ path('app_post_add') }}">
+            Create Posts
+        </a>
+    {% endif %}
 
 
 </div>
