@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class PostController extends AbstractController
 {
@@ -26,6 +27,7 @@ class PostController extends AbstractController
         ]);
     }
 
+    #[isGranted('ROLE_USER')]
     #[Route('/post/add', name: 'app_post_add')]
     public function addPost(Request $request)
     {
@@ -36,11 +38,13 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /**@var $formPost Post */
             $formPost = $form->getData();
+//             link to the user
+            $user = $this->getUser();
+            $formPost->setUser($user);
             $this->postRepository->save($formPost, true);
 
         }
 
-//        TODO add the the form
         return $this->render('post/create.html.twig', ['form' => $form]);
 
     }
