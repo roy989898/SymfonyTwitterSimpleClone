@@ -41,6 +41,11 @@
 
 
 </div>
+{% for message in app.flashes('success') %}
+    <div class="border p-3 text-green-500 border-green-500 border-4">
+        {{ message }}
+    </div>
+{% endfor %}
 {% block body %}{% endblock %}
 </body>
 </html>

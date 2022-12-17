@@ -43,7 +43,7 @@ class PostController extends AbstractController
             $formPost->setUser($user);
             $this->postRepository->save($formPost, true);
 
-
+            $this->addFlash('success', 'Added Post');
             return $this->redirectToRoute('app_post');
 
         }
@@ -69,6 +69,7 @@ class PostController extends AbstractController
             $formPost = $form->getData();
 
             $this->postRepository->save($formPost, true);
+            $this->addFlash('success', 'Updated Post');
             return $this->redirectToRoute('app_post');
         }
 
@@ -88,6 +89,7 @@ class PostController extends AbstractController
         }
 
         $this->postRepository->remove($post, true);
+        $this->addFlash('success', 'Deleted Post');
 
         return $this->redirectToRoute('app_post');
 

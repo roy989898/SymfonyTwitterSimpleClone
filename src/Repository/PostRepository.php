@@ -22,7 +22,10 @@ class PostRepository extends ServiceEntityRepository
     }
 
 
-    public function findAllWithUser()
+    /**
+     * @return Post[]
+     */
+    public function findAllWithUser(): array
     {
         return $this->createQueryBuilder('p')
             ->leftJoin('p.user', 'u')
