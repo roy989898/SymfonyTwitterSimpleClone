@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Post;
+use App\Form\CommentFormType;
 use App\Form\PostType;
+use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +17,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class PostController extends AbstractController
 {
 
-    public function __construct(private PostRepository $postRepository)
+    public function __construct(private PostRepository $postRepository, private CommentRepository $commentRepository)
     {
     }
 
@@ -28,10 +31,29 @@ class PostController extends AbstractController
     }
 
     #[Route('/post/{post<\d+>}', name: 'app_post_detail')]
-    public function postDetail(Post $post)
+    public function postDetail(Post $post, Request $request)
     {
+
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentFormType::class, $comment);
+        $commentForm->handleRequest($request);
+
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            /**@var $formComment Comment */
+            $formComment = $commentForm->getData();
+            $user = $this->getUser();
+            $formComment->setUser($user);
+            $formComment->setPost($post);
+            $this->commentRepository->save($formComment, true);
+
+//            TODO redirect to where???
+            return $this->redirectToRoute('app_post_detail', ['post' => $post->getId()]);
+        }
+
+
         return $this->render('post/detail.html.twig', [
-            'post' => $post
+            'post' => $post,
+            'commentForm' => $commentForm
         ]);
 
     }

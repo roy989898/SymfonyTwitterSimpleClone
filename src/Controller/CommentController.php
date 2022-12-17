@@ -8,11 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CommentController extends AbstractController
 {
-    #[Route('/comment/create', name: 'app_comment_create')]
-    public function create(): Response
-    {
-        return $this->render('comment/index.html.twig', [
-            'controller_name' => 'CommentController',
-        ]);
-    }
+    /*    #[Route('/comment/create', name: 'app_comment_create')]
+        public function create(): Response
+        {
+            return $this->render('comment/index.html.twig', [
+                'controller_name' => 'CommentController',
+            ]);
+        }*/
 }

@@ -20,6 +20,24 @@
         </div>
 
 
+        {{ form_start(commentForm,{
+            'attr':{
+                'novalidate':'novalidate'
+            }
+
+        }) }}
+
+        {{ form_widget(commentForm.text,{
+            'attr':{
+                'class':'form_widget'
+            }
+
+        }) }}
+        {{ form_errors(commentForm.text) }}
+        <button type="submit" class="btn">Comment</button>
+
+        {{ form_end(commentForm) }}
+
     </div>
 
 {% endblock %}
