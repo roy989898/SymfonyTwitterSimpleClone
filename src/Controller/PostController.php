@@ -21,7 +21,7 @@ class PostController extends AbstractController
     #[Route('/post', name: 'app_post')]
     public function index(): Response
     {
-        $posts = $this->postRepository->findAll();
+        $posts = $this->postRepository->findAllWithUser();
         return $this->render('post/index.html.twig', [
             'posts' => $posts
         ]);
