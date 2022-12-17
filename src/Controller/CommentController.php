@@ -22,6 +22,7 @@ class CommentController extends AbstractController
     {
 
         $commentForm = $this->createForm(CommentFormType::class, $comment);
+//        TODO has problem
         $commentForm->handleRequest($request);
         if ($commentForm->isSubmitted() && $commentForm->isValid() && $comment->getUser()?->getId() !== null && ($this->getUser()?->getID() === $comment->getUser()?->getId())) {
             /**@var $formComment Comment */
@@ -30,7 +31,6 @@ class CommentController extends AbstractController
 
             return $this->redirectToRoute('app_post_detail', ['post' => $comment->getPost()?->getId()]);
 
-//            TODO redirect to where???
         }
         return $this->render('comment/edit.html.twig', [
             'commentForm' => $commentForm
