@@ -43,6 +43,9 @@ class PostController extends AbstractController
             $formPost->setUser($user);
             $this->postRepository->save($formPost, true);
 
+
+            return $this->redirectToRoute('app_post');
+
         }
 
         return $this->render('post/create.html.twig', ['form' => $form]);
@@ -66,7 +69,7 @@ class PostController extends AbstractController
             $formPost = $form->getData();
 
             $this->postRepository->save($formPost, true);
-
+            return $this->redirectToRoute('app_post');
         }
 
         return $this->render('post/edit.html.twig', ['form' => $form]);
