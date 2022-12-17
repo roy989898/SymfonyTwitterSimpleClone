@@ -36,4 +36,15 @@ class CommentController extends AbstractController
             'commentForm' => $commentForm
         ]);
     }
+
+
+    #[Route('/comment/del/{comment<\d+>}', name: 'app_comment_delete')]
+    public function delete(Comment $comment, Request $request): Response
+    {
+
+        $postId = $comment->getPost()?->getId();
+        $this->commentRepository->remove($comment, true);
+
+        return $this->redirectToRoute('app_post_detail', ['post' => $postId]);
+    }
 }
