@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -17,6 +18,7 @@ class Post
     private ?int $id = null;
 
 
+    #[NotBlank]
     #[Length(min: 1, max: 255)]
     #[ORM\Column(length: 10000)]
     private ?string $text = null;
