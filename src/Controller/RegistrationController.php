@@ -83,4 +83,12 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('app_register');
     }
+
+
+    #[Route('/logout', name: 'app_logout')]
+    public function logout()
+    {
+
+    }
+
 }
