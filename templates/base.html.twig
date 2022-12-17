@@ -15,6 +15,22 @@
     {% endblock %}
 </head>
 <body>
+<div class="flex flex-row gap-1">
+    <a href="{{ path('app_login') }}">
+        Login
+    </a>
+    <a href="#">
+        Logout
+    </a>
+    <a href="{{ path('app_post') }}">
+        Posts
+    </a>
+    <a href="#">
+        Create Posts
+    </a>
+
+
+</div>
 {% block body %}{% endblock %}
 </body>
 </html>
