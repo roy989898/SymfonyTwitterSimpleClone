@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Post;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -36,9 +37,16 @@ class AppFixtures extends Fixture
         $normalUser->setIsVerified(true);
         $manager->persist($normalUser);
 
-        
 
+        $post1 = new Post();
+        $post1->setUser($normalUser);
+        $post1->setText('Post 1');
 
+        $post2 = new Post();
+        $post2->setUser($normalUser);
+        $post2->setText('Post 2');
+        $manager->persist($post1);
+        $manager->persist($post2);
 
 
         $manager->flush();
