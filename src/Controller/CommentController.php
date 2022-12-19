@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CommentController extends AbstractController
+class CommentController extends MyController
 {
     public function __construct(private CommentRepository $commentRepository, private PostRepository $postRepository)
     {
@@ -24,10 +24,14 @@ class CommentController extends AbstractController
         $commentForm = $this->createForm(CommentFormType::class, $comment);
 //        TODO has problem
         $commentForm->handleRequest($request);
-        if ($commentForm->isSubmitted() && $commentForm->isValid() && $comment->getUser()?->getId() !== null && ($this->getUser()?->getID() === $comment->getUser()?->getId())) {
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             /**@var $formComment Comment */
-            $formComment = $commentForm->getData();
-            $this->commentRepository->save($formComment, true);
+
+            if ($this->isAllowThisUserToDelete($comment->getUser()?->getId())) {
+                $formComment = $commentForm->getData();
+                $this->commentRepository->save($formComment, true);
+            }
+
 
             return $this->redirectToRoute('app_post_detail', ['post' => $comment->getPost()?->getId()]);
 
@@ -43,7 +47,8 @@ class CommentController extends AbstractController
     {
 
         $postId = $comment->getPost()?->getId();
-        $this->commentRepository->remove($comment, true);
+        if ($this->isAllowThisUserToDelete($comment->getUser()?->getId()))
+            $this->commentRepository->remove($comment, true);
 
         return $this->redirectToRoute('app_post_detail', ['post' => $postId]);
     }

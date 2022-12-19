@@ -56,7 +56,7 @@
                         {% endif %}
 
                         {#                        TODO edit #}
-                        {% if app.user.id ==  comment.user.id %}
+                        {% if app.user.id ==  comment.user.id or is_granted('ROLE_SUPER_ADMIN') %}
                             <a class="border border-amber-600 p-3"
                                href="{{ path('app_comment_edit',{'comment':comment.id}) }}"
 
