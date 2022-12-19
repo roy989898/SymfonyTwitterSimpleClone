@@ -17,7 +17,7 @@
                     </a>
 
                     {% if  app.user!=null %}
-                        {% if (post.user!=null and app.user.id == post.user.id) %}
+                        {% if (post.user!=null and app.user.id == post.user.id) or is_granted('ROLE_SUPER_ADMIN') %}
                             <a class="text-pink-800 border border-pink-800 p-1 "
                                href="{{ path('app_post_edit',{'post':post.id}) }}">edit</a>
 

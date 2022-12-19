@@ -90,7 +90,7 @@ class PostController extends AbstractController
     {
         $postUserID = $post->getUser()?->getId();
         $userID = $this->getUser()?->getId();
-        if ($postUserID !== $userID) {
+        if ($postUserID !== $userID || $this->isGranted('ROLE_SUPER_ADMIN')) {
             $this->redirectToRoute('app_post');
         }
         $form = $this->createForm(PostType::class, $post);
@@ -115,7 +115,7 @@ class PostController extends AbstractController
     {
         $postUserID = $post->getUser()?->getId();
         $userID = $this->getUser()?->getId();
-        if ($postUserID !== $userID) {
+        if ($postUserID !== $userID || $this->isGranted('ROLE_SUPER_ADMIN')) {
             $this->redirectToRoute('app_post');
         }
 
