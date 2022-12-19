@@ -43,9 +43,13 @@ class Comment
     #[ORM\OneToMany(mappedBy: 'comment', targetEntity: self::class)]
     private Collection $comments;
 
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'likedComments')]
+    private Collection $likedUsers;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->likedUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -151,6 +155,30 @@ class Comment
                 $comment->setComment(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getLikedUsers(): Collection
+    {
+        return $this->likedUsers;
+    }
+
+    public function addLikedUser(User $likedUser): self
+    {
+        if (!$this->likedUsers->contains($likedUser)) {
+            $this->likedUsers->add($likedUser);
+        }
+
+        return $this;
+    }
+
+    public function removeLikedUser(User $likedUser): self
+    {
+        $this->likedUsers->removeElement($likedUser);
 
         return $this;
     }
