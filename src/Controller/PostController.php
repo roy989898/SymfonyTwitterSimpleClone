@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class PostController extends AbstractController
+class PostController extends MyController
 {
 
     public function __construct(private PostRepository $postRepository, private CommentRepository $commentRepository)
@@ -89,8 +89,7 @@ class PostController extends AbstractController
     public function editPost(Post $post, Request $request): Response
     {
         $postUserID = $post->getUser()?->getId();
-        $userID = $this->getUser()?->getId();
-        if ($postUserID !== $userID || $this->isGranted('ROLE_SUPER_ADMIN')) {
+        if (!$this->isAllowThisUserToDelete($postUserID)) {
             $this->redirectToRoute('app_post');
         }
         $form = $this->createForm(PostType::class, $post);
@@ -114,8 +113,8 @@ class PostController extends AbstractController
     public function deletePost(Post $post, Request $request)
     {
         $postUserID = $post->getUser()?->getId();
-        $userID = $this->getUser()?->getId();
-        if ($postUserID !== $userID || $this->isGranted('ROLE_SUPER_ADMIN')) {
+
+        if (!$this->isAllowThisUserToDelete($postUserID)) {
             $this->redirectToRoute('app_post');
         }
 
