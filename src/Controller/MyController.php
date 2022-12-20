@@ -2,12 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
+use App\Entity\Post;
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 abstract class MyController extends AbstractController
 {
 
+
+    public function __construct(private UserRepository $userRepository)
+    {
+    }
 
     public function isAllowThisUserToDelete(?int $objectUserID): bool
     {
@@ -24,5 +31,64 @@ abstract class MyController extends AbstractController
         return $user;
 
     }
+
+
+    protected function likeThePost(Post $post)
+    {
+
+        $user = $this->getMyUser();
+
+        $user?->addLikedPost($post);
+
+        if ($user !== null) {
+            $this->userRepository->save($user, true);
+        }
+
+
+    }
+
+    protected function unLikeThePost(Post $post)
+    {
+
+        $user = $this->getMyUser();
+
+        $user?->removeLikedPost($post);
+
+        if ($user !== null) {
+            $this->userRepository->save($user, true);
+        }
+
+
+    }
+
+    protected function likeTheComment(Comment $comment)
+    {
+
+        $user = $this->getMyUser();
+
+        $user?->addLikedComment($comment);
+
+        if ($user !== null) {
+            $this->userRepository->save($user, true);
+        }
+
+
+    }
+
+
+    protected function unLikeTheComment(Comment $comment)
+    {
+
+        $user = $this->getMyUser();
+
+        $user?->removeLikedComment($comment);
+
+        if ($user !== null) {
+            $this->userRepository->save($user, true);
+        }
+
+
+    }
+
 
 }
