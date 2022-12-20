@@ -8,6 +8,7 @@ use App\Form\CommentFormType;
 use App\Form\PostType;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,9 +18,17 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class PostController extends MyController
 {
 
-    public function __construct(private PostRepository $postRepository, private CommentRepository $commentRepository)
+
+    public function __construct(private UserRepository $userRepository, private PostRepository $postRepository, private CommentRepository $commentRepository)
     {
+
+
+        parent::__construct($this->userRepository);
     }
+
+    /* public function __construct(private PostRepository $postRepository, private CommentRepository $commentRepository)
+     {
+     }*/
 
     #[Route('/post', name: 'app_post')]
     public function index(): Response
@@ -29,6 +38,25 @@ class PostController extends MyController
             'posts' => $posts
         ]);
     }
+
+
+    #[Route('/post/like/{post<\d+>}', name: 'app_post_like_post')]
+    public function likePost(Post $post): Response
+    {
+
+        $this->likeThePost($post);
+        return $this->redirectToRoute('app_post');
+    }
+
+
+    #[Route('/post/unlike/{post<\d+>}', name: 'app_post_unlike_post')]
+    public function unLikePost(Post $post): Response
+    {
+
+        $this->unLikeThePost($post);
+        return $this->redirectToRoute('app_post');
+    }
+
 
     #[Route('/post/{post<\d+>}', name: 'app_post_detail')]
     public function postDetail(Post $post, Request $request)

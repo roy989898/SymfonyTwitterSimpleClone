@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Form\CommentFormType;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,8 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CommentController extends MyController
 {
-    public function __construct(private CommentRepository $commentRepository, private PostRepository $postRepository)
+    public function __construct(private UserRepository $userRepository, private PostRepository $postRepository, private CommentRepository $commentRepository)
     {
+
+
+        parent::__construct($this->userRepository);
     }
 
     #[Route('/comment/edit/{comment<\d+>}', name: 'app_comment_edit')]
