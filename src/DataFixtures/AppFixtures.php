@@ -31,7 +31,7 @@ class AppFixtures extends Fixture
 
 
         $normalUser = new User();
-        $normalUser->setEmail('roy989898@gmail.com');
+        $normalUser->setEmail('roy7676767667@gmail.com');
         $normalUser->setPassword($this->userPasswordHasher->hashPassword($superAdmin, 'password'));
         $normalUser->setName("POM");
         $normalUser->setIsVerified(true);
