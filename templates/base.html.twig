@@ -52,13 +52,8 @@
 {% endfor %}
 
 
-<span class="material-symbols-outlined hart_on">
-favorite
-</span>
-
-<span class="material-symbols-outlined hart_off">
-favorite
-</span>
+{{ include('icon/hart_off.html.twig') }}
+{{ include('icon/hart_on.html.twig') }}
 
 
 {% block body %}{% endblock %}
